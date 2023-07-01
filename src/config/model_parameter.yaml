@@ -1,0 +1,12 @@
+model:
+  Xgboost: 
+    n_estimators:  [10,50,60]
+    max_depth: [10,20,50]
+    max_leaves: [10,20,50]
+    max_bin: [10,20,5]
+    reg_alpha: [0.1,0,0.2]
+    reg_lambda: [0.1,0,0.2]
+    grow_policy: ['depthwise','lossguide']
+    colsample_bytree: [0.1,0.2,0.3]
+    colsample_bylevel: [0.3,0.4,0.5]
+    colsample_bynode: [0.3,0.4,0.5]    

@@ -1,0 +1,53 @@
+categorical:
+  EDUCATION:
+    type: int64
+  MARRIAGE:
+    type: int64
+  SEX:
+    type: int64
+numerical:
+  AGE:
+    type: int64
+  BILL_AMT1:
+    type: int64
+  BILL_AMT2:
+    type: int64
+  BILL_AMT3:
+    type: int64
+  BILL_AMT4:
+    type: int64
+  BILL_AMT5:
+    type: int64
+  BILL_AMT6:
+    type: int64
+  ID:
+    type: int64
+  LIMIT_BAL:
+    type: int64
+  PAY_0:
+    type: int64
+  PAY_2:
+    type: int64
+  PAY_3:
+    type: int64
+  PAY_4:
+    type: int64
+  PAY_5:
+    type: int64
+  PAY_6:
+    type: int64
+  PAY_AMT1:
+    type: int64
+  PAY_AMT2:
+    type: int64
+  PAY_AMT3:
+    type: int64
+  PAY_AMT4:
+    type: int64
+  PAY_AMT5:
+    type: int64
+  PAY_AMT6:
+    type: int64
+target:
+  default target:
+    type: int64

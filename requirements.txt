@@ -6,3 +6,10 @@ matplotlib==3.7.1
 xgboost==1.7.6
 lightgbm==3.3.5
 catboost==1.2
+boto3
+evidently
+pymongo
+pyarrow
+fastparquet
+xlrd
+-e .

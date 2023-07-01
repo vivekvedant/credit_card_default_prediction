@@ -1,0 +1,18 @@
+SEX:
+  1: "male"
+  2: "female"
+
+EDUCATION:
+  1: "graduage_school"
+  2: "university"
+  3: "high_school"
+  4: "others"
+  6: "unkown_1_education"
+  0: "unkown_2_education"
+
+
+MARRIAGE:
+  1: "married"
+  2: "single"
+  3: "others"
+  0: "unkown_1_marriage"
