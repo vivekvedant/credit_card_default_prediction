@@ -1,0 +1,127 @@
+- hosts: localhost
+  become: yes
+  vars_files:
+    - var.yml
+  tasks:
+    - name: Install aptitude using apt
+      apt: name=aptitude state=latest update_cache=yes force_apt_get=yes
+
+    - name: Install required system packages
+      apt: name={{ item }} state=latest update_cache=yes
+      loop:
+        [
+          "apt-transport-https",
+          "ca-certificates",
+          "curl",
+          "software-properties-common",
+          "python3-pip",
+          "virtualenv",
+          "python3-venv",
+          "python3-setuptools",
+        ]
+
+    - name: Add Docker GPG apt Key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    - name: Add Docker Repository
+      apt_repository:
+        repo: deb https://download.docker.com/linux/ubuntu bionic stable
+        state: present
+
+    - name: Update apt and install docker-ce
+      apt: update_cache=yes name=docker-ce state=latest
+
+    - name: Install Docker Module for Python
+      pip:
+        name: docker
+
+    - name: Download the awscli bundle.
+      get_url: 
+        url: https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip
+        dest: /tmp/awscli-bundle.zip
+      register: aws_cli_download_bundle
+    
+    - name: install unzip
+      apt: 
+        name: unzip
+        update_cache: yes
+
+    - name: change python3 to python
+      apt: 
+        name: python-is-python3
+        update_cache: yes
+
+
+    - name: unzip the aws_cli_download_bundle
+      command: unzip  -o /tmp/awscli-bundle.zip 
+
+
+    - name: Install awscli package.
+      shell:  /home/ubuntu/aws/install --update
+      register: aws_cli_installed
+      become: yes
+      become_user: root
+
+    - name: Configure AWS.
+      shell: aws configure set {{ item.key }} {{ item.value }} --profile {{ aws_profile }}
+      no_log: True
+      with_dict:
+        aws_access_key_id: "{{ aws_access_key }}"
+        aws_secret_access_key: "{{ aws_secret_key }}"
+        region: "{{ aws_region }}"
+        format: "{{ aws_format }}"
+      register: aws_cli_config
+
+    - set_fact:
+        ecr_registry_url: "{{ aws_account_id }}.dkr.ecr.{{ aws_region }}.amazonaws.com" 
+
+    - name: Get ECR token
+      shell: "aws ecr get-login-password --region {{ aws_region }}"
+      register: ecr_token
+
+    - name: Log into ECR registry
+      docker_login:
+        registry_url: "{{ ecr_registry_url }}"
+        debug: yes
+        username: "AWS"
+        password: "{{ ecr_token.stdout }}"
+        reauthorize: yes
+
+
+    - name: list containers
+      command: "docker container ls -a "
+      register: list_container_result
+
+    - debug:
+        var: list_container_result.stdout | length > 0
+
+    - name: Get a list of all running containers
+      docker_host_info:
+        containers: True
+      register: docker_info
+
+    - name: Stop all running containers
+      no_log: True
+      docker_container:
+        name: '{{ item.Names[0] | regex_replace("^/", "") }}'
+        state: stopped
+      loop: '{{ docker_info.containers }}'
+
+    - name: Prune everything
+      community.docker.docker_prune:
+        containers: true
+        images: true
+        networks: true
+        volumes: true
+        builder_cache: true
+
+    - name: docker pull
+      command: "docker pull {{ecr_registry_url}}/test_docker_project:{{image_tag}}"
+    
+    - name: docker run
+      command: "docker run  -d  -p 80:80 {{ecr_registry_url}}/test_docker_project:{{image_tag}}"
+
+
+    

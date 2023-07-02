@@ -1,0 +1,5 @@
+---
+aws_region: ap-south-1
+aws_format:  table
+aws_system_user: ubuntu
+aws_profile: default

@@ -1,2 +1,2 @@
 import os
-MONGO_DB_URL = os.getenv("database_url")
+MONGO_DB_URL = os.getenv("MONGODB_URL")
