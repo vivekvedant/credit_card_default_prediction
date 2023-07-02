@@ -13,10 +13,7 @@ variable "aws_vpc_id"{
   description = "Id of vpc"
 }
 
-variable "aws_account_id" {
-  type = string
-  description = "aws acount id"
-}
+
 
 variable "aws_access_key_id" {
   type = string
