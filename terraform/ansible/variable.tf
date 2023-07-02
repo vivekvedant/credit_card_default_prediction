@@ -30,6 +30,10 @@ variable "aws_secret_access_key" {
   description = "aws secret access key"
 }
 
+variable "aws_account_id" {
+  type = string
+  description = "aws account id"
+}
 variable "image_tag"{
   type = string
 }
