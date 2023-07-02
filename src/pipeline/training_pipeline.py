@@ -1,10 +1,9 @@
 from src.components.data_ingestion import DataIngestion
 from src.components.data_transformation import DataTransformation
 from src.components.model_trainer import ModelTrainer
-from src.components.model_hyperparameter_tuning import ModelHyperparamterTuning
 from src.entity.configuration_entity import(
      DataIngestionConfig,DataValidationConfig,DataTransformationConfig,
-     ModelTrainerConfig,ModelHyperparameterConfig
+     ModelTrainerConfig
 )
 from src.entity.artifact_entity import(
     DataIngestionArtifact,DataValidationArtifact,DataTransformationArtifact
@@ -22,7 +21,7 @@ class TrainingPipeline:
          self.data_validation_config = DataValidationConfig()
          self.data_transformation_config =  DataTransformationConfig()
          self.model_training_config = ModelTrainerConfig()
-         self.mode_hyperparameter_config = ModelHyperparameterConfig()
+        #  self.mode_hyperparameter_config = ModelHyperparameterConfig()
     
     def start_data_ingestion(self) -> DataIngestionArtifact:
         try:
@@ -71,18 +70,6 @@ class TrainingPipeline:
             logging.exception(e)
             raise CustomException(e, sys)
         
-    def start_model_tuning(self,data_transformation_artifact:DataTransformationArtifact):
-        try:
-            
-            logging.info("starting model tuning")
-            model_hyper_parameter_tuning = ModelHyperparamterTuning(data_transformation_artifact,self.model_training_config,
-                                                                    self.mode_hyperparameter_config)
-            model_hyper_parameter_tuning.fine_tune_model()
-            logging.info("completed model tuning")
-        except Exception as e:
-            logging.exception(e)
-            raise CustomException(e, sys)
-        
     
     def run_training_pipeline(self):
         logging.info("starting training pipeline")
@@ -94,7 +81,6 @@ class TrainingPipeline:
         data_transformation_artifacts = self.start_data_transformation(data_validation_artifacts)
 
         model_training = self.start_training(data_transformation_artifacts)
-        model_tuning = self.start_model_tuning(data_transformation_artifacts)
 
         logging.info("completed training pipeline")
 

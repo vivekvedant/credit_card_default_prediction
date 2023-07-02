@@ -70,15 +70,14 @@ class DataTransformationConfig:
 class ModelTrainerConfig:
     model_config = model_config
     model_report = MODEL_REPORT_COLLECTION
+    model_path = os.path.join(ROOT_DIR,ARTIFACT_DIR,MODEL_DIR,MODEL_FILE_NAME)
+    model_s3_path = f"{MODEL_DIR}/{MODEL_FILE_NAME}"
+    s3_bucket_name = S3_BUCKET_NAME
 
 
 @dataclass
-class ModelHyperparameterConfig:
-    model_config = model_config
-    
+class PredictionPipelineConfig:
     model_path = os.path.join(ROOT_DIR,ARTIFACT_DIR,MODEL_DIR,MODEL_FILE_NAME)
-    model_s3_path = f"{MODEL_DIR}/{MODEL_FILE_NAME}"
-
-    model_parameter = os.path.join(ROOT_DIR,CONFIG_DIR,MODEL_PARAMERTER)
-    model_tune_collection = MODEL_TUNE_REPORT_COLLECTION
-    s3_bucket_name = S3_BUCKET_NAME
+    processed_data_path = os.path.join(ROOT_DIR,ARTIFACT_DIR,PREPROSSED_PKL)
+    categorical_encoding_yaml = os.path.join(ROOT_DIR,CONFIG_DIR,CATEGORY_ENCODING_FILE_PATH)
+    schema_encoding_yaml = os.path.join(ROOT_DIR,ARTIFACT_DIR,SCHEMA_FILENAME)

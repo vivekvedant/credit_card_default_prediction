@@ -9,16 +9,6 @@ import yaml
 import numpy as np
 import joblib
 
-def upload_file(file_name, bucket, object_name=None):
-    if object_name is None:
-        object_name = os.path.basename(file_name)
-    s3_client = boto3.client('s3')
-    try:
-        response = s3_client.upload_file(file_name, bucket, object_name)
-    except Exception as e:
-        logging.error(e)
-        raise CustomException(e, sys)
-    
 
 
 def read_csv(file_name,bucket):
@@ -77,13 +67,24 @@ def store_model(content,filename):
         raise CustomException(e,sys)
     
 
-def upload_file(file_name, bucket, object_name=None):
+def upload_file(file_name, bucket, object_name=None,file_object = False):
     if object_name is None:
         object_name = os.path.basename(file_name)
     s3_client = boto3.client('s3')
     try:
-        response = s3_client.upload_file(file_name, bucket, object_name)
+        if file_object:
+            response = s3_client.upload_fileobj(file_name, bucket, object_name)
+        else:
+            response = s3_client.upload_file(file_name, bucket, object_name)
     except Exception as e:
         logging.error(e)
         raise CustomException(e, sys)
     
+
+
+def load_model(filename):
+    try:
+        model = joblib.load(filename)
+        return model
+    except Exception as e:
+        logging.exception(e)

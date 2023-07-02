@@ -26,8 +26,3 @@ class DataTransformationArtifact:
 @dataclass
 class ModelTrainingArtifact:
     model_training_summary: pd.DataFrame()
-
-@dataclass
-class ModelHyperparameterArtifact:
-    model_path: str
-    tuning_status: bool

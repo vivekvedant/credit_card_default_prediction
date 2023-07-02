@@ -41,10 +41,10 @@ class DataTransformation:
     def  initiate_data_transformation(self):
         try:
             logging.info("reading data")
-            # print(self.data_validation_artifact.train_valid_data_file)
+
             train_df = pd.read_parquet(self.data_validation_artifact.train_valid_data_file)
             test_df = pd.read_parquet(self.data_validation_artifact.test_valid_data_file)
-            # print(train_df.columns)
+            
             logging.info("transforming data")
             processor = DataTransformation.feature_transformation()
 

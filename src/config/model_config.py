@@ -10,14 +10,14 @@ from catboost import CatBoostClassifier
 
 
 model_config = {
-    # "Knn": KNeighborsClassifier(),
-    # "logistic_regression":LogisticRegression(n_jobs = -1),
-    # "decision Tree":DecisionTreeClassifier(),
-    # "gradientBoosting":GradientBoostingClassifier(),
-    # "Adaboost":AdaBoostClassifier(),
-    # "RandomForest":RandomForestClassifier(n_jobs = -1),
+    "Knn": KNeighborsClassifier(),
+    "logistic_regression":LogisticRegression(n_jobs = -1),
+    "decision Tree":DecisionTreeClassifier(),
+    "gradientBoosting":GradientBoostingClassifier(),
+    "Adaboost":AdaBoostClassifier(),
+    "RandomForest":RandomForestClassifier(n_jobs = -1),
     "Xgboost": XGBClassifier(n_jobs  = -1),
-    # "Lightgboost": LGBMClassifier(n_jobs = -1),
-    # "catboost": CatBoostClassifier(verbose = 0)
+    "Lightgboost": LGBMClassifier(n_jobs = -1),
+    "catboost": CatBoostClassifier(verbose = 0)
 }
 

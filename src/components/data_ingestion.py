@@ -8,8 +8,6 @@ from src.entity.configuration_entity import DataIngestionConfig
 from src.entity.artifact_entity import DataIngestionArtifact
 from src.utils import upload_file,read_csv
 
-
-
 class DataIngestion:
 
     def __init__(self,data_ingestion_config: DataIngestionConfig) -> DataIngestionArtifact:
