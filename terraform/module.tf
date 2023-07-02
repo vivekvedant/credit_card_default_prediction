@@ -1,7 +1,7 @@
 
 terraform {
   backend "s3"{
-    bucket = "s3statebackendvivek"
+    bucket = "credit-default-data-versioning"
     dynamodb_table = "state-lock"
     key = "global/mystatefile/terraform.tfstate"
     region = "ap-south-1"
