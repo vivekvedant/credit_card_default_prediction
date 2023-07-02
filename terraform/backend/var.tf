@@ -11,5 +11,14 @@ variable "aws_region" {
   default = "ap-south-1"
 }
 
+variable "aws_arn_id"{
+  type = string
+}
+
+variable "ecr_name"{
+  type = string
+  default = "credit-default-data-versioning-repository"
+}
+
 
 
