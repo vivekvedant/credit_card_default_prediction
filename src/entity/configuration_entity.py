@@ -20,12 +20,14 @@ class DataIngestionConfig:
 
     test_data_path = os.path.join(ROOT_DIR,ARTIFACT_DIR,PROCESSED_DATA_DIR,TEST_DATA_FILENAME)
     test_data_s3_path = f"{PROCESSED_DATA_DIR}/{TEST_DATA_FILENAME}"
-    
-    raw_data_path = os.path.join(ROOT_DIR,ARTIFACT_DIR,RAW_DATA_DIR,RAW_DATA_FILENAME)
 
     raw_data_s3_path = f"{RAW_DATA_DIR}/{RAW_DATA_FILENAME}"
 
     s3_bucket_name = S3_BUCKET_NAME
+
+    def __post_init__(self):
+        if not os.path.exists(os.path.join(ROOT_DIR,ARTIFACT_DIR,PROCESSED_DATA_DIR)):
+            os.makedirs(os.path.join(ROOT_DIR,ARTIFACT_DIR,PROCESSED_DATA_DIR))
 
 
 @dataclass
@@ -48,6 +50,13 @@ class DataValidationConfig:
 
     s3_bucket_name = S3_BUCKET_NAME
 
+    def __post_init__(self):
+        if not os.path.exists(os.path.join(ROOT_DIR,ARTIFACT_DIR,VALID_DATA_DIR)):
+            os.makedirs(os.path.join(ROOT_DIR,ARTIFACT_DIR,VALID_DATA_DIR))
+        
+        if not os.path.exists(os.path.join(ROOT_DIR,ARTIFACT_DIR,INVALID_DATA_DIR)):
+            os.makedirs(os.path.join(ROOT_DIR,ARTIFACT_DIR,INVALID_DATA_DIR))
+
 
 
 @dataclass
@@ -66,6 +75,10 @@ class DataTransformationConfig:
 
     s3_bucket_name = S3_BUCKET_NAME
 
+    def __post_init__(self):
+        if not os.path.exists(os.path.join(ROOT_DIR,ARTIFACT_DIR,TRANSFORMED_FEATURE_DIR)):
+            os.makedirs(os.path.join(ROOT_DIR,ARTIFACT_DIR,TRANSFORMED_FEATURE_DIR))
+
 @dataclass
 class ModelTrainerConfig:
     model_config = model_config
@@ -73,6 +86,10 @@ class ModelTrainerConfig:
     model_path = os.path.join(ROOT_DIR,ARTIFACT_DIR,MODEL_DIR,MODEL_FILE_NAME)
     model_s3_path = f"{MODEL_DIR}/{MODEL_FILE_NAME}"
     s3_bucket_name = S3_BUCKET_NAME
+
+    def __post_init__(self):
+        if not os.path.exists(os.path.join(ROOT_DIR,ARTIFACT_DIR,MODEL_DIR)):
+            os.makedirs(os.path.join(ROOT_DIR,ARTIFACT_DIR,MODEL_DIR))
 
 
 @dataclass

@@ -32,8 +32,21 @@ resource "null_resource" "ansible" {
     ]
   }
   
-  provisioner "remote-exec"{
-    inline = ["ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook playbook.yml --extra-vars \" mongodb_url=${var.mongodb_url}  aws_account_id=${var.aws_account_id} aws_access_key=${var.aws_access_key_id} aws_secret_access_key=${var.aws_secret_access_key} image_tag=${var.image_tag}\"" ]
+  # provisioner "remote-exec"{
+  #   inline = ["ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook playbook.yml --extra-vars \" mongodb_url=${var.mongodb_url}  aws_account_id=${var.aws_account_id} aws_access_key=${var.aws_access_key_id} aws_region=${var.aws_default_region} aws_secret_access_key=${var.aws_secret_access_key} image_tag=${var.image_tag}\"" ]
 
+  # }
+  provisioner "remote-exec" {
+    inline = [
+      <<-EOT
+        ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook playbook.yml \
+          --extra-vars "mongodb_url=${var.mongodb_url} \
+          aws_account_id=${var.aws_account_id} \
+          aws_access_key=${var.aws_access_key_id} \
+          aws_region=${var.aws_default_region} \
+          aws_secret_access_key=${var.aws_secret_access_key} \
+          image_tag=${var.image_tag}"
+      EOT
+    ]
   }
 }
