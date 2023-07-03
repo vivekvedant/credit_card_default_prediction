@@ -1,4 +1,4 @@
-resource "aws_instance" "test_server" {
+resource "aws_instance" "ec2_instance" {
   ami = var.ami
   key_name = var.key_name
   instance_type = var.instance_type
