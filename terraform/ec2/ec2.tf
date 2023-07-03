@@ -6,5 +6,12 @@ resource "aws_instance" "test_server" {
   subnet_id   = aws_subnet.public_subnet.id
   associate_public_ip_address   = true
   depends_on = [aws_key_pair.private-key]
+  
+  root_block_device {
+    volume_size           = "20"
+    volume_type           = "gp2"
+    encrypted             = true
+    delete_on_termination = true
+  }
 }
 

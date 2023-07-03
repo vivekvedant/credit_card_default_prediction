@@ -37,4 +37,3 @@ variable "aws_account_id" {
 variable "image_tag"{
   type = string
 }
-

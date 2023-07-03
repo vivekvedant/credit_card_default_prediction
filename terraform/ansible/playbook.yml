@@ -69,7 +69,7 @@
       no_log: True
       with_dict:
         aws_access_key_id: "{{ aws_access_key }}"
-        aws_secret_access_key: "{{ aws_secret_key }}"
+        aws_secret_access_key: "{{ aws_secret_access_key }}"
         region: "{{ aws_region }}"
         format: "{{ aws_format }}"
       register: aws_cli_config
@@ -118,10 +118,13 @@
         builder_cache: true
 
     - name: docker pull
-      command: "docker pull {{ecr_registry_url}}/test_docker_project:{{image_tag}}"
+      command: "docker pull {{ecr_registry_url}}/credit-default-data-versioning-repository:{{image_tag}}"
     
     - name: docker run
-      command: "docker run  -d  -p 80:80 {{ecr_registry_url}}/test_docker_project:{{image_tag}}"
+      command: "docker run  -d  -e MONGODB_URL={{mongodb_url}} -e AWS_ACCESS_KEY_ID={{aws_access_key}} \
+                -e AWS_SECRET_ACCESS_KEY={{aws_secret_access_key}} -p 80:80 {{ecr_registry_url}}/credit-default-data-versioning-repository:{{image_tag}}"
 
 
     
+
+
