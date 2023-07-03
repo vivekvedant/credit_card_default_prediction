@@ -10,7 +10,7 @@ current_datetime = datetime.now()
 current_date_time = current_datetime.strftime("%m-%d-%Y")
 log_file_name = f"running_logs_{current_date_time}.log"
 log_filepath = os.path.join(log_dir,log_file_name)
-
+os.makedirs(log_dir,exist_ok=True)
 class S3Handler(logging.StreamHandler):
     def __init__(self, s3_client, bucket, key):
         super().__init__()
